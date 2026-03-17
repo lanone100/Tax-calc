@@ -2,12 +2,13 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
+<!-- 鎖定縮放、防止誤觸 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>營業稅計算機 · 金緻版</title>
+<title>營業稅計算機 · TAX 快捷</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  /* ----- 重置與變數 ----- */
+  /* ----- 重置與變數 (視覺完全保留) ----- */
   *,
   *::before,
   *::after {
@@ -32,6 +33,7 @@
     transition: background 0.3s, color 0.3s;
     background: #080806;
     color: #f0ead4;
+    touch-action: pan-y; /* 僅允許垂直滑動，雙指縮放已由 meta 禁止 */
   }
 
   button {
@@ -39,6 +41,7 @@
     cursor: pointer;
     font-family: inherit;
     outline: none;
+    -webkit-touch-callout: none;
   }
 
   /* 黑金深色 (預設) */
@@ -287,30 +290,30 @@
   }
   .zh.lit { color: var(--g3); }
 
-  /* 稅率晶片 */
+  /* 稅率晶片 — 縮減高度 */
   .tax-cfg {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-top: 8px;
+    gap: 6px;
+    margin-top: 2px;           /* 原8px → 2px 降低高度 */
     flex-wrap: wrap;
   }
   .tax-lbl {
-    font-size: 13px;
+    font-size: 12px;           /* 稍微縮小 */
     font-weight: 600;
     color: var(--t3);
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     flex-shrink: 0;
   }
   .chips {
     display: flex;
-    gap: 5px;
+    gap: 4px;
     flex-wrap: wrap;
   }
   .chip {
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 13px;
+    padding: 3px 10px;         /* 原5px12px → 3px10px 降低高度 */
+    border-radius: 18px;
+    font-size: 12px;           /* 原13px → 12px */
     font-weight: 600;
     font-family: 'JetBrains Mono', monospace;
     background: var(--s3);
@@ -326,19 +329,19 @@
     box-shadow: 0 2px 8px rgba(180, 130, 20, 0.35);
   }
 
-  /* 稅額結果卡片 */
+  /* 稅額結果卡片 — 縮減上下間距 */
   .tax-res {
     display: none;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 6px;
-    margin-top: 8px;
+    margin-top: 4px;           /* 原8px → 4px */
   }
   .tax-res.show { display: grid; }
   .tc {
     background: var(--s2);
     border: 1px solid var(--bd);
-    border-radius: 10px;
-    padding: 7px 5px;
+    border-radius: 8px;        /* 原10px → 8px 稍微縮小 */
+    padding: 4px 3px;          /* 原7px5px → 4px3px */
     text-align: center;
   }
   .tc.hi {
@@ -346,15 +349,15 @@
     border-color: var(--bd2);
   }
   .tc-l {
-    font-size: 11px;
+    font-size: 10px;           /* 原11px → 10px */
     color: var(--t3);
-    letter-spacing: 1px;
-    margin-bottom: 3px;
+    letter-spacing: 0.8px;
+    margin-bottom: 2px;        /* 原3px → 2px */
     font-weight: 600;
   }
   .tc-v {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 15px;
+    font-size: 14px;           /* 原15px → 14px */
     font-weight: 700;
     color: var(--t2);
     overflow: hidden;
@@ -368,7 +371,7 @@
     background-clip: text;
   }
 
-  /* 鍵盤區 — 填滿剩餘高度 */
+  /* 鍵盤區 — 完全保留原有設計，僅調整最後一行順序及稅按鈕文字 */
   .kp-wrap {
     flex: 1;
     min-height: 0;
@@ -399,6 +402,7 @@
     user-select: none;
     -webkit-user-select: none;
     min-height: 0;
+    -webkit-touch-callout: none;
   }
   .btn:active { transform: scale(0.91) translateY(2px); }
 
@@ -450,12 +454,13 @@
 
   .btn-wide { grid-column: span 2; }
 
+  /* 稅按鈕：改成 TAX 並置左 (原樣式不變，僅文字修改) */
   .btn-tax {
     grid-column: span 2;
     background: var(--gold-soft);
     color: var(--g2);
     border: 1.5px solid var(--g3);
-    font-size: 15px;
+    font-size: 18px;           /* 稍微加大以容納 TAX */
     font-weight: 700;
     font-family: 'Noto Sans TC', sans-serif;
     letter-spacing: 1px;
@@ -481,7 +486,7 @@
     box-shadow: var(--ks);
   }
 
-  /* 抽屜 (歷史記錄) */
+  /* 抽屜 (歷史記錄) 完全相同 */
   .overlay {
     position: fixed;
     inset: 0;
@@ -577,7 +582,6 @@
     line-height: 2.4;
   }
 
-  /* 歷史項目 */
   .hi {
     background: var(--s2);
     border: 1px solid var(--bd);
@@ -687,7 +691,7 @@
   }
   .hi:active .hi-use { opacity: 1; }
 
-  /* 模態框 (自訂稅率) */
+  /* 模態框 */
   .modal-bg {
     position: fixed;
     inset: 0;
@@ -811,7 +815,7 @@
 </head>
 <body class="dark">
 
-<!-- 固定元件: Toast, 模態框, 抽屜, 遮罩 -->
+<!-- 固定元件 -->
 <div class="toast" id="toast"></div>
 
 <div class="modal-bg" id="modalBg">
@@ -907,27 +911,22 @@
       <button class="btn btn-num" data-a="dot">．</button>
       <button class="btn btn-eq"  data-a="eq">=</button>
 
+      <!-- 調整順序：稅按鈕移到最左邊 (col1-2) ，接著退格(col3) ，複製(col4) -->
+      <button class="btn btn-tax" data-a="tax">◆ TAX</button>
       <button class="btn btn-bs"  data-a="bs">⌫</button>
-      <button class="btn btn-tax" data-a="tax">◆ 計算營業稅</button>
       <button class="btn btn-copy" data-a="cpy">複製</button>
     </div>
   </div>
 </div>
 
 <script>
+  // ---------- 完整功能 (與前版相同，完全保留) ----------
   (function() {
-    // ---------- 狀態 ----------
     const S = {
-      d: '0',               // 當前顯示數字 (字串)
-      expr: '',             // 運算式輔助
-      prev: null,           // 前一運算元
-      op: null,             // 運算子
-      wait: false,          // 等待輸入第二運算元
-      rate: 5,              // 目前稅率 %
-      hist: []              // 歷史記錄
+      d: '0', expr: '', prev: null, op: null, wait: false, rate: 5, hist: []
     };
 
-    // ---------- 主題切換 ----------
+    // 主題
     let dark = localStorage.getItem('bgcTheme') !== 'light';
     function applyT() {
       document.body.classList.toggle('dark', dark);
@@ -943,39 +942,26 @@
       applyT();
     };
 
-    // ---------- 大寫數字轉換 ----------
+    // 大寫轉換
     function toCN(str) {
       const n = parseFloat(str);
       if (isNaN(n) || !isFinite(n)) return '';
       if (n === 0) return '零元整';
       if (Math.abs(n) > 999999999999) return '（數值過大）';
       const D = ['零', '壹', '貳', '參', '肆', '伍', '陸', '柒', '捌', '玖'];
-      const U = ['', '拾', '佰', '仟'];
-      const M = ['', '萬', '億'];
-
+      const U = ['', '拾', '佰', '仟']; const M = ['', '萬', '億'];
       function sec(s) {
         let r = '', zero = false;
         for (let i = 0; i < s.length; i++) {
-          const d = +s[i];
-          const u = U[s.length - 1 - i];
-          if (!d) {
-            zero = true;
-          } else {
-            if (zero) { r += '零'; zero = false; }
-            r += D[d] + u;
-          }
+          const d = +s[i], u = U[s.length - 1 - i];
+          if (!d) zero = true;
+          else { if (zero) { r += '零'; zero = false; } r += D[d] + u; }
         }
         return r;
       }
-
       const abs = String(Math.round(Math.abs(n)));
-      const chunks = [];
-      let t = abs;
-      while (t.length) {
-        chunks.unshift(t.slice(-4));
-        t = t.slice(0, -4);
-      }
-
+      const chunks = []; let t = abs;
+      while (t.length) { chunks.unshift(t.slice(-4)); t = t.slice(0, -4); }
       let res = '';
       for (let i = 0; i < chunks.length; i++) {
         if (!+chunks[i]) continue;
@@ -983,8 +969,7 @@
         if (res && chunks[i][0] === '0') res += '零';
         res += s + M[chunks.length - 1 - i];
       }
-      if (res.startsWith('壹拾')) res = res.slice(1); // 拾壹萬 等
-
+      if (res.startsWith('壹拾')) res = res.slice(1);
       const dotIdx = str.indexOf('.');
       let dec = '';
       if (dotIdx !== -1) {
@@ -998,7 +983,6 @@
       return (n < 0 ? '負' : '') + res + '元' + (dec || '整');
     }
 
-    // ---------- 輔助函式 ----------
     function fmt(v) {
       if (v === 'Error') return 'Error';
       const p = v.toString().split('.');
@@ -1015,7 +999,6 @@
       return fb;
     }
 
-    // ---------- 畫面更新 ----------
     function render() {
       const numEl = document.getElementById('num');
       const zhEl = document.getElementById('zh');
@@ -1037,7 +1020,6 @@
       document.getElementById('expr').textContent = S.expr;
     }
 
-    // 稅額顯示
     function rTax(base) {
       const el = document.getElementById('taxRes');
       if (S.rate === 0 || isNaN(base)) {
@@ -1054,7 +1036,7 @@
     }
     function hideTax() { document.getElementById('taxRes').classList.remove('show'); }
 
-    // ---------- 歷史記錄 ----------
+    // 歷史記錄
     function loadH() {
       try { S.hist = JSON.parse(localStorage.getItem('bgcHist') || '[]'); } catch { S.hist = []; }
       updBadge();
@@ -1094,46 +1076,36 @@
       </div>`).join('');
     }
 
-    // 點擊歷史填入
     document.getElementById('drwList').addEventListener('click', e => {
       const hi = e.target.closest('.hi');
       if (!hi) return;
       const h = S.hist[+hi.dataset.i];
       if (!h) return;
       S.d = h.result;
-      S.expr = '';
-      S.op = null;
-      S.prev = null;
-      S.wait = false;
+      S.expr = ''; S.op = null; S.prev = null; S.wait = false;
       render();
       if (h.taxTot) {
         S.rate = h.taxRate;
         document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
         const ch = document.querySelector(`.chip[data-r="${h.taxRate}"]`);
         if (ch) ch.classList.add('on');
-        else {
-          const cc = document.getElementById('customChip');
-          cc.textContent = h.taxRate + '%✎';
-          cc.classList.add('on');
-        }
+        else { const cc = document.getElementById('customChip'); cc.textContent = h.taxRate + '%✎'; cc.classList.add('on'); }
         rTax(parseFloat(h.result));
       } else hideTax();
       closeD();
       toast('已填入：' + fmt(h.result));
     });
 
-    // ---------- 抽屜控制 ----------
     function openD() { renderHL(); document.getElementById('drawer').classList.add('on'); document.getElementById('overlay').classList.add('on'); }
     function closeD() { document.getElementById('drawer').classList.remove('on'); document.getElementById('overlay').classList.remove('on'); }
     document.getElementById('histBtn').onclick = openD;
     document.getElementById('overlay').onclick = closeD;
     document.getElementById('drwClear').onclick = () => { if (confirm('確定清除所有記錄？')) { S.hist = []; saveH(); renderHL(); } };
 
-    // ---------- Toast ----------
     let tT;
     function toast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(tT); tT = setTimeout(() => t.classList.remove('on'), 2400); }
 
-    // ---------- 稅率晶片 ----------
+    // 稅率晶片
     document.getElementById('chips').addEventListener('click', e => {
       const c = e.target.closest('.chip');
       if (!c) return;
@@ -1150,7 +1122,6 @@
       hideTax();
     });
 
-    // 自訂稅率模態框
     document.getElementById('mNo').onclick = () => document.getElementById('modalBg').classList.remove('on');
     document.getElementById('mOk').onclick = confirmRate;
     document.getElementById('modalInp').addEventListener('keydown', e => { if (e.key === 'Enter') confirmRate(); });
@@ -1166,7 +1137,7 @@
       hideTax();
     }
 
-    // ---------- 按鍵動作 ----------
+    // 按鍵動作
     function aN(v) {
       if (S.d === 'Error') S.d = '0';
       if (S.wait) { S.d = v; S.wait = false; }
@@ -1178,20 +1149,16 @@
     }
     function aDot() {
       if (S.wait) { S.d = '0.'; S.wait = false; render(); return; }
-      if (!S.d.includes('.')) S.d += '.';
-      render();
+      if (!S.d.includes('.')) S.d += '.'; render();
     }
     function aOp(op) {
       if (S.d === 'Error') return;
       if (S.op && !S.wait) {
         const res = calc(S.prev, S.op, S.d);
         if (res === 'Error') { S.d = 'Error'; S.op = null; render(); return; }
-        S.d = String(r2(res));
-        S.prev = S.d;
+        S.d = String(r2(res)); S.prev = S.d;
       } else S.prev = S.d;
-      S.op = op;
-      S.wait = true;
-      S.expr = fmt(S.prev) + ' ' + op;
+      S.op = op; S.wait = true; S.expr = fmt(S.prev) + ' ' + op;
       hideTax(); render();
     }
     function aEq() {
@@ -1200,11 +1167,7 @@
       const res = calc(S.prev, S.op, S.d);
       S.expr = ex + ' =';
       if (res === 'Error') S.d = 'Error';
-      else {
-        const rr = String(r2(res));
-        addH({ expr: ex, result: rr, zh: toCN(rr), ts: Date.now() });
-        S.d = rr;
-      }
+      else { const rr = String(r2(res)); addH({ expr: ex, result: rr, zh: toCN(rr), ts: Date.now() }); S.d = rr; }
       S.op = null; S.prev = null; S.wait = false;
       hideTax(); render();
     }
@@ -1233,7 +1196,6 @@
       }
     }
 
-    // 綁定按鈕事件
     document.querySelectorAll('.btn').forEach(btn => {
       btn.addEventListener('click', function () {
         const a = this.dataset.a, v = this.dataset.v;
@@ -1250,7 +1212,6 @@
       });
     });
 
-    // 鍵盤支援
     document.addEventListener('keydown', e => {
       if (document.getElementById('modalBg').classList.contains('on')) return;
       if (e.key >= '0' && e.key <= '9') aN(e.key);
@@ -1267,7 +1228,6 @@
       else if ((e.ctrlKey || e.metaKey) && e.key === 'c') aCpy();
     });
 
-    // 初始化
     loadH();
     render();
   })();

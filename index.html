@@ -5,10 +5,10 @@
 <!-- 鎖定縮放、防止誤觸 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>營業稅計算機 · TAX 快捷</title>
+<title>營業稅計算機 · 按鍵發光</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  /* ----- 重置與變數 (視覺完全保留) ----- */
+  /* ----- 重置與變數 ----- */
   *,
   *::before,
   *::after {
@@ -33,7 +33,7 @@
     transition: background 0.3s, color 0.3s;
     background: #080806;
     color: #f0ead4;
-    touch-action: pan-y; /* 僅允許垂直滑動，雙指縮放已由 meta 禁止 */
+    touch-action: pan-y;
   }
 
   button {
@@ -290,19 +290,19 @@
   }
   .zh.lit { color: var(--g3); }
 
-  /* 稅率晶片 — 縮減高度 */
+  /* 稅率晶片 — 字體放大 */
   .tax-cfg {
     display: flex;
     align-items: center;
     gap: 6px;
-    margin-top: 2px;           /* 原8px → 2px 降低高度 */
+    margin-top: 2px;
     flex-wrap: wrap;
   }
   .tax-lbl {
-    font-size: 12px;           /* 稍微縮小 */
+    font-size: 13px;
     font-weight: 600;
     color: var(--t3);
-    letter-spacing: 1.5px;
+    letter-spacing: 1px;
     flex-shrink: 0;
   }
   .chips {
@@ -311,9 +311,9 @@
     flex-wrap: wrap;
   }
   .chip {
-    padding: 3px 10px;         /* 原5px12px → 3px10px 降低高度 */
+    padding: 3px 10px;
     border-radius: 18px;
-    font-size: 12px;           /* 原13px → 12px */
+    font-size: 13px;
     font-weight: 600;
     font-family: 'JetBrains Mono', monospace;
     background: var(--s3);
@@ -329,19 +329,19 @@
     box-shadow: 0 2px 8px rgba(180, 130, 20, 0.35);
   }
 
-  /* 稅額結果卡片 — 縮減上下間距 */
+  /* 稅額結果卡片 — 字體放大 */
   .tax-res {
     display: none;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 6px;
-    margin-top: 4px;           /* 原8px → 4px */
+    gap: 4px;
+    margin-top: 2px;
   }
   .tax-res.show { display: grid; }
   .tc {
     background: var(--s2);
     border: 1px solid var(--bd);
-    border-radius: 8px;        /* 原10px → 8px 稍微縮小 */
-    padding: 4px 3px;          /* 原7px5px → 4px3px */
+    border-radius: 5px;
+    padding: 2px 2px;
     text-align: center;
   }
   .tc.hi {
@@ -349,15 +349,15 @@
     border-color: var(--bd2);
   }
   .tc-l {
-    font-size: 10px;           /* 原11px → 10px */
+    font-size: 10px;
     color: var(--t3);
-    letter-spacing: 0.8px;
-    margin-bottom: 2px;        /* 原3px → 2px */
+    letter-spacing: 0.4px;
+    margin-bottom: 1px;
     font-weight: 600;
   }
   .tc-v {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;           /* 原15px → 14px */
+    font-size: 13px;
     font-weight: 700;
     color: var(--t2);
     overflow: hidden;
@@ -371,7 +371,7 @@
     background-clip: text;
   }
 
-  /* 鍵盤區 — 完全保留原有設計，僅調整最後一行順序及稅按鈕文字 */
+  /* 鍵盤區 */
   .kp-wrap {
     flex: 1;
     min-height: 0;
@@ -454,13 +454,13 @@
 
   .btn-wide { grid-column: span 2; }
 
-  /* 稅按鈕：改成 TAX 並置左 (原樣式不變，僅文字修改) */
+  /* 稅按鈕：TAX 置左 */
   .btn-tax {
     grid-column: span 2;
     background: var(--gold-soft);
     color: var(--g2);
     border: 1.5px solid var(--g3);
-    font-size: 18px;           /* 稍微加大以容納 TAX */
+    font-size: 18px;
     font-weight: 700;
     font-family: 'Noto Sans TC', sans-serif;
     letter-spacing: 1px;
@@ -486,7 +486,7 @@
     box-shadow: var(--ks);
   }
 
-  /* 抽屜 (歷史記錄) 完全相同 */
+  /* 抽屜 (歷史記錄) */
   .overlay {
     position: fixed;
     inset: 0;
@@ -811,6 +811,68 @@
     to   { opacity: 1; transform: scale(1); }
   }
   .pop { animation: numPop 0.14s ease; }
+
+  /* ---------- 移除所有焦點外框 ---------- */
+  .btn:focus,
+  .btn:focus-visible,
+  .chip:focus,
+  .chip:focus-visible,
+  .iBtn:focus,
+  .iBtn:focus-visible,
+  .drw-clear:focus,
+  .drw-clear:focus-visible,
+  .mbtn:focus,
+  .mbtn:focus-visible,
+  .hi:focus,
+  .hi:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  /* ---------- 鼠標懸停發光效果 (金色外圈) ---------- */
+  .btn-num:hover {
+    box-shadow: 0 0 0 2px var(--g3), var(--ks);
+  }
+  .btn-fn:hover {
+    box-shadow: 0 0 0 2px var(--g3), var(--ks);
+  }
+  .btn-op:hover {
+    box-shadow: 0 0 0 2px var(--g3), var(--ks);
+  }
+  .btn-eq:hover {
+    box-shadow: 0 0 0 2px var(--g3), 0 4px 0 var(--g5), 0 5px 14px rgba(180, 130, 20, 0.28);
+  }
+  .btn-tax:hover {
+    box-shadow: 0 0 0 2px var(--g3), 0 3px 0 var(--g6), 0 4px 12px rgba(180, 130, 20, 0.15);
+  }
+  .btn-bs:hover {
+    box-shadow: 0 0 0 2px var(--g3), var(--ks);
+  }
+  .btn-copy:hover {
+    box-shadow: 0 0 0 2px var(--g3), var(--ks);
+  }
+  .chip:hover {
+    box-shadow: 0 0 0 2px var(--g3);
+    /* 保持原有邊框，金色外圈疊加 */
+  }
+  .iBtn:hover {
+    box-shadow: 0 0 0 2px var(--g3), var(--cs);
+  }
+  .mbtn:hover {
+    box-shadow: 0 0 0 2px var(--g3), 0 3px 12px rgba(160, 110, 10, 0.4); /* 保留 .mbtn-ok 的陰影，但 .mbtn-no 沒有陰影，我們可以統一加 */
+  }
+  /* 針對 mbtn-no 單獨處理 */
+  .mbtn-no:hover {
+    box-shadow: 0 0 0 2px var(--g3), 0 1px 0 rgba(0,0,0,0.1); /* 添加微弱的 */
+  }
+  .drw-clear:hover {
+    box-shadow: 0 0 0 2px var(--g3);
+    background: var(--red-bg); /* 保留原有 active 背景，hover 時也加 */
+  }
+  .hi:hover {
+    box-shadow: 0 0 0 2px var(--g3), var(--cs);
+    transform: scale(0.99); /* 輕微縮放增加反饋 */
+  }
 </style>
 </head>
 <body class="dark">
@@ -911,7 +973,7 @@
       <button class="btn btn-num" data-a="dot">．</button>
       <button class="btn btn-eq"  data-a="eq">=</button>
 
-      <!-- 調整順序：稅按鈕移到最左邊 (col1-2) ，接著退格(col3) ，複製(col4) -->
+      <!-- TAX 按鈕在最左邊，接著退格，複製 -->
       <button class="btn btn-tax" data-a="tax">◆ TAX</button>
       <button class="btn btn-bs"  data-a="bs">⌫</button>
       <button class="btn btn-copy" data-a="cpy">複製</button>
@@ -920,7 +982,7 @@
 </div>
 
 <script>
-  // ---------- 完整功能 (與前版相同，完全保留) ----------
+  // ---------- 完整功能 (與前版相同) ----------
   (function() {
     const S = {
       d: '0', expr: '', prev: null, op: null, wait: false, rate: 5, hist: []

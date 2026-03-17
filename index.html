@@ -9,36 +9,48 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html, body { height: 100%; overflow: hidden; }
-body { font-family: 'Noto Sans TC', sans-serif; display: flex; flex-direction: column; align-items: center; transition: background 0.3s, color 0.3s; }
+html { height: 100%; background: #080806; }
+body {
+  height: 100%; overflow: hidden;
+  font-family: 'Noto Sans TC', sans-serif;
+  display: flex; flex-direction: column; align-items: center;
+  transition: background 0.3s, color 0.3s;
+  background: #080806;
+  color: #f0ead4;
+}
 button { border: none; cursor: pointer; font-family: inherit; outline: none; }
 
-:root {
-–g1: #f5e7a0; –g2: #e8c97a; –g3: #c9a84c; –g4: #a07830; –g5: #7a5c1e; –g6: #3a2800;
-–gold: linear-gradient(135deg,#f5e7a0 0%,#c9a84c 45%,#e8c97a 65%,#a07830 100%);
-–gold-btn: linear-gradient(150deg,#e8c97a 0%,#c9a84c 55%,#b08020 100%);
-–gold-soft: rgba(201,168,76,0.10);
-–green: #3a9a58; –red: #c94040; –red-bg: rgba(201,64,64,0.10);
-}
-
+/* 黑金深色（預設） */
 body.dark {
-–bg:#080806; –s1:#111108; –s2:#1a1910; –s3:#242218; –s4:#2e2c20;
-–bd:rgba(201,168,76,0.13); –bd2:rgba(201,168,76,0.28);
-–t1:#f0ead4; –t2:#9a8850; –t3:#5a4e28;
-–nb:#1c1b12; –fb:#0e0d08; –ob:#18170f;
-–ks:0 4px 0 #000, 0 2px 8px rgba(0,0,0,0.8);
-–cs:0 0 0 1px rgba(201,168,76,0.08), 0 8px 32px rgba(0,0,0,0.7);
-}
-body.light {
-–bg:#f0ead4; –s1:#faf6e8; –s2:#f0e8cc; –s3:#e4d8b0; –s4:#d8c898;
-–bd:rgba(140,100,30,0.18); –bd2:rgba(140,100,30,0.38);
-–t1:#1a1400; –t2:#6a4e18; –t3:#a07838;
-–nb:#faf6e8; –fb:#e0d4a8; –ob:#e8ddb8;
-–ks:0 4px 0 rgba(100,70,10,0.22), 0 2px 8px rgba(0,0,0,0.12);
-–cs:0 0 0 1px rgba(140,100,30,0.14), 0 4px 20px rgba(0,0,0,0.12);
+background: #080806 !important;
+color: #f0ead4 !important;
+–bg:#080806; –s1:#131210; –s2:#1c1b12; –s3:#252318; –s4:#302e20;
+–bd:rgba(201,168,76,0.15); –bd2:rgba(201,168,76,0.32);
+–t1:#f0ead4; –t2:#9a8850; –t3:#6a5c32;
+–nb:#1e1d14; –fb:#0f0e09; –ob:#1a1910;
+–ks:0 4px 0 #000, 0 2px 8px rgba(0,0,0,0.85);
+–cs:0 0 0 1px rgba(201,168,76,0.10), 0 8px 32px rgba(0,0,0,0.75);
 }
 
-body { background: var(–bg); color: var(–t1); }
+/* 羊皮紙淺色 */
+body.light {
+background: #ede4c8 !important;
+color: #1a1400 !important;
+–bg:#ede4c8; –s1:#faf5e4; –s2:#f0e8ce; –s3:#e4d8ae; –s4:#d4c494;
+–bd:rgba(140,100,30,0.20); –bd2:rgba(140,100,30,0.42);
+–t1:#1a1400; –t2:#6a4e18; –t3:#9a7030;
+–nb:#faf5e4; –fb:#ddd0a0; –ob:#e8dab4;
+–ks:0 4px 0 rgba(100,70,10,0.25), 0 2px 8px rgba(0,0,0,0.14);
+–cs:0 0 0 1px rgba(140,100,30,0.16), 0 4px 20px rgba(0,0,0,0.14);
+}
+
+:root {
+–g1:#f5e7a0; –g2:#e8c97a; –g3:#c9a84c; –g4:#a07830; –g5:#7a5c1e; –g6:#3a2800;
+–gold:linear-gradient(135deg,#f5e7a0 0%,#c9a84c 45%,#e8c97a 65%,#a07830 100%);
+–gold-btn:linear-gradient(150deg,#e8c97a 0%,#c9a84c 55%,#b08020 100%);
+–gold-soft:rgba(201,168,76,0.12);
+–green:#3a9a58; –red:#c94040; –red-bg:rgba(201,64,64,0.12);
+}
 
 /* ── App: 固定螢幕高度，Flex 分配 ── */
 .app {
@@ -48,6 +60,7 @@ display: flex; flex-direction: column;
 overflow: hidden;
 padding-bottom: env(safe-area-inset-bottom, 0px);
 position: relative;
+background: inherit;
 }
 .app::before {
 content:’’; position:absolute; top:0; left:0; right:0; height:3px;
@@ -377,6 +390,7 @@ let dark=localStorage.getItem('bgcTheme')!=='light';
 function applyT(){
   document.body.classList.toggle('dark',dark);
   document.body.classList.toggle('light',!dark);
+  document.documentElement.style.background = dark ? '#080806' : '#ede4c8';
   document.getElementById('iSun').style.display=dark?'block':'none';
   document.getElementById('iMoon').style.display=!dark?'block':'none';
 }
